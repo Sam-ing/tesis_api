@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const userProfile_pg_repository_1 = require("../repositories/userProfile.pg.repository");
+const userProfile_useCase_1 = require("../../application/userProfile/userProfile.useCase");
+const userProfile_controller_1 = require("../controllers/userProfile/userProfile.controller");
+//import { userProfile } from "../controllers/controllers.handler";
+const userProfileRouter = (0, express_1.Router)();
+const repository = new userProfile_pg_repository_1.userProfilePGRepository();
+const useCase = new userProfile_useCase_1.UserProfileUseCase(repository);
+const controller = new userProfile_controller_1.userProfileController(useCase);
+userProfileRouter.get("/hello", (_req, res) => res.send("Hello world!"));
+userProfileRouter.post("/userProfile", controller.insert);
+exports.default = userProfileRouter;

@@ -9,31 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userProfile = void 0;
+exports.UserProfile = void 0;
 const typeorm_1 = require("typeorm");
-let userProfile = class userProfile {
+let UserProfile = class UserProfile {
 };
-exports.userProfile = userProfile;
+exports.UserProfile = UserProfile;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], userProfile.prototype, "id", void 0);
+], UserProfile.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
-], userProfile.prototype, "firstName", void 0);
+], UserProfile.prototype, "firstName", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
-], userProfile.prototype, "lastname", void 0);
+], UserProfile.prototype, "lastname", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
-], userProfile.prototype, "email", void 0);
+], UserProfile.prototype, "email", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], UserProfile.prototype, "password", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], userProfile.prototype, "phoneNumber", void 0);
-exports.userProfile = userProfile = __decorate([
+], UserProfile.prototype, "phoneNumber", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], UserProfile.prototype, "adress", void 0);
+exports.UserProfile = UserProfile = __decorate([
     (0, typeorm_1.Entity)("userProfile")
-], userProfile);
+], UserProfile);

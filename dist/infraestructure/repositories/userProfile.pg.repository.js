@@ -14,7 +14,7 @@ const userProfile_model_1 = require("../models/userProfile.model");
 const postgres_1 = require("../database/postgres");
 class userProfilePGRepository {
     constructor() {
-        this.repository = postgres_1.AppDataSource.getRepository(userProfile_model_1.userProfile);
+        this.repository = postgres_1.AppDataSource.getRepository(userProfile_model_1.UserProfile);
     }
     findUserProfileById(id) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,21 +31,25 @@ class userProfilePGRepository {
     }
     deleteUserProfile(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const deletedUser = yield this.repository.delete(id);
-            return deletedUser;
+            const deleteResult = yield this.repository.delete(id);
+            return deleteResult;
         });
     }
-    modifyUserProfile(user) {
+    modifyUserProfile(id, fields) {
         return __awaiter(this, void 0, void 0, function* () {
-            const newUserProfile = yield this.repository.create(user);
-            const updatedUser = yield this.repository.save(newUserProfile);
-            return updatedUser;
+            const updateResult = yield this.repository.update(id, fields);
+            return updateResult;
         });
     }
     listUserProfiles() {
         return __awaiter(this, void 0, void 0, function* () {
             const foundUserProfiles = yield this.repository.find();
             return foundUserProfiles;
+        });
+    }
+    findByEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.repository.findOne({ where: { email } });
         });
     }
 }

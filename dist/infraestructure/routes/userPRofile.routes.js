@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const userProfile_pg_repository_1 = require("../repositories/userProfile.pg.repository");
-const userProfile_useCase_1 = require("../../application/userProfile/userProfile.useCase");
-const userProfile_controller_1 = require("../controllers/userProfile/userProfile.controller");
-//import { userProfile } from "../controllers/controllers.handler";
+const controllers_handler_1 = require("../controllers/controllers.handler");
 const userProfileRouter = (0, express_1.Router)();
-const repository = new userProfile_pg_repository_1.userProfilePGRepository();
-const useCase = new userProfile_useCase_1.UserProfileUseCase(repository);
-const controller = new userProfile_controller_1.userProfileController(useCase);
-userProfileRouter.get("/hello", (_req, res) => res.send("Hello world!"));
+const controller = new controllers_handler_1.controllersHandler().getUserProfileController();
+const middlewaresController = new controllers_handler_1.controllersHandler().getMiddleWaresController();
+//UserProfiles routes
 userProfileRouter.post("/userProfile", controller.insert);
+userProfileRouter.get("/userProfile/:id", middlewaresController.auth, controller.findOne);
+userProfileRouter.get("/userProfile", middlewaresController.auth, controller.findAll);
+userProfileRouter.delete("/userProfile/:id", middlewaresController.auth, controller.delete);
+userProfileRouter.put("/userProfile/:id", middlewaresController.auth, controller.update);
 exports.default = userProfileRouter;

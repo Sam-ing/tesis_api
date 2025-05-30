@@ -8,16 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserProfileUseCase = void 0;
 const userProfile_value_1 = require("../../domain/userProfile/userProfile.value");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 class UserProfileUseCase {
     constructor(userProfileRepository) {
         this.userProfileRepository = userProfileRepository;
     }
-    registerUserProfile(user) {
+    registerUserProfile(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userProfile = new userProfile_value_1.userProfileValue(user);
+            const password = yield bcrypt_1.default.hash(data.password, 10);
+            data.password = password;
+            const userProfile = new userProfile_value_1.userProfileValue(data);
             const registeredUser = yield this.userProfileRepository.insertUserProfile(userProfile);
             let newUserProfile = undefined;
             if (registeredUser) {
@@ -44,22 +50,14 @@ class UserProfileUseCase {
     }
     deleteUserProfile(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const deltedUserProfile = this.userProfileRepository.deleteUserProfile(id);
-            return deltedUserProfile;
+            const deleteResult = yield this.userProfileRepository.deleteUserProfile(id);
+            return deleteResult.affected ? true : false;
         });
     }
-    modifyUserProfile(user) {
+    modifyUserProfile(id, fields) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userProfile = new userProfile_value_1.userProfileValue(user);
-            const updatedUserProfile = yield this.userProfileRepository.modifyUserProfile(userProfile);
-            let newUserProfile = undefined;
-            if (updatedUserProfile) {
-                newUserProfile = new userProfile_value_1.userProfileValue(updatedUserProfile);
-            }
-            else {
-                newUserProfile = updatedUserProfile;
-            }
-            return newUserProfile;
+            const updateResult = yield this.userProfileRepository.modifyUserProfile(id, fields);
+            return updateResult.affected ? (updateResult.affected > 0) ? this.findUserProfileById(id) : null : null;
         });
     }
     getAllUserProfiles() {

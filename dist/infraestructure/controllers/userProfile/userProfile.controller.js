@@ -10,37 +10,60 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userProfileController = void 0;
+const http_response_1 = require("../../../helpers/http.response");
 class userProfileController {
-    constructor(useCase) {
+    constructor(useCase, httpResponse = new http_response_1.HttpResponse()) {
         this.useCase = useCase;
-    }
-    insert(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log("asdasdsad");
-            const userProfile = yield this.useCase.registerUserProfile(req);
-            res.statusCode = 201;
-            res.send({ userProfile });
-        });
-    }
-    findOne(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id);
-            const userProfile = yield this.useCase.findUserProfileById(id);
-            if (userProfile) {
-                res.statusCode = 200;
-                res.send({ userProfile });
+        this.httpResponse = httpResponse;
+        this.insert = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userProfile = yield this.useCase.registerUserProfile(req.body);
+                return this.httpResponse.Created(res, userProfile);
             }
-            else {
-                res.statusCode = 404;
-                res.send("userProfile not found");
+            catch (e) {
+                return this.httpResponse.Error(res, e);
             }
         });
-    }
-    findAll(_req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const userProfiles = yield this.useCase.getAllUserProfiles();
-            res.statusCode = 200;
-            res.send({ userProfiles });
+        this.findOne = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = parseInt(req.params.id);
+                const userProfile = yield this.useCase.findUserProfileById(id);
+                return userProfile ? this.httpResponse.Ok(res, userProfile) : this.httpResponse.NotFound(res, "User Profile not found");
+            }
+            catch (e) {
+                console.log(e);
+                return this.httpResponse.Error(res, e);
+            }
+        });
+        this.findAll = (_req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userProfiles = yield this.useCase.getAllUserProfiles();
+                return userProfiles.length > 0 ? this.httpResponse.Ok(res, userProfiles) : this.httpResponse.NotFound(res, "No User Profiles found");
+            }
+            catch (e) {
+                return this.httpResponse.Error(res, e);
+            }
+        });
+        this.delete = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = parseInt(req.params.id);
+                const deleteResult = yield this.useCase.deleteUserProfile(id);
+                return deleteResult ? this.httpResponse.Ok(res, "User Profile deleted successfuly") : this.httpResponse.NotFound(res, "User Profile not found");
+            }
+            catch (e) {
+                return this.httpResponse.Error(res, e);
+            }
+        });
+        this.update = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = parseInt(req.params.id);
+                const fields = req.body;
+                const updatedUserProfile = yield this.useCase.modifyUserProfile(id, fields);
+                return updatedUserProfile ? this.httpResponse.Ok(res, updatedUserProfile) : this.httpResponse.NotFound(res, "User Profile not found");
+            }
+            catch (e) {
+                return this.httpResponse.Error(res, e);
+            }
         });
     }
 }

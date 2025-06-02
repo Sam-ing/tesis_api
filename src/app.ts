@@ -8,5 +8,5 @@ import "reflect-metadata";
 
 
 async function main() {
-  new Server({}).start()
+  new Server().start()
 }

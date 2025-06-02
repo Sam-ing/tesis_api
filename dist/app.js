@@ -16,6 +16,6 @@ require("reflect-metadata");
 })();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        new server_1.Server({}).start();
+        new server_1.Server().start();
     });
 }

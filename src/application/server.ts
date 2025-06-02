@@ -30,6 +30,7 @@ export class Server{
 
     async start(){
         dotenv.config({ path: __dirname+'/.env' });
+        console.log(process.env.DATABASE_URL)
         await AppDataSource.initialize()
         this.app.listen(this.port, () => {
             return console.log(`Express is listening at http://localhost:${this.port}`);

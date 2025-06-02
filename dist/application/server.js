@@ -37,6 +37,7 @@ class Server {
     start() {
         return __awaiter(this, void 0, void 0, function* () {
             dotenv_1.default.config({ path: __dirname + '/.env' });
+            console.log(process.env.DATABASE_PUBLIC_URL);
             yield postgres_1.AppDataSource.initialize();
             this.app.listen(this.port, () => {
                 return console.log(`Express is listening at http://localhost:${this.port}`);

@@ -5,10 +5,13 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "start": "sleep 5 && node dist/app.js",
+    "start": "node dist/app.js",
     "dev": "ts-node-dev src/app.ts",
     "postinstall": "npm run build"
   },
+  "engines": {
+  "node": "18.x"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

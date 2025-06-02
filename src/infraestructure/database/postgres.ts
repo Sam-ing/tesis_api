@@ -11,6 +11,11 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     logging: true,
     ssl: false,
+     extra: {
+        host:  process.env.DATABASE_URL 
+        ? { host: new URL(process.env.DATABASE_URL).hostname }
+        : {},
+    },
     entities: [Locality, Province, Country, Adress, UserProfile],
     subscribers: [],
     migrations: []

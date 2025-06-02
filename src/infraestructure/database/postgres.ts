@@ -7,15 +7,11 @@ dotenv.config();
 console.log(process.env.DATABASE_URL)
 export const AppDataSource = new DataSource({
     type: "postgres",
-    url: process.env.DATABASE_URL,
+    url: "postgresql://postgres:RPSHsJhOkqsrSDtQgfYUlhdytMNsqHuj@postgres.railway.internal:5432/railway",
     synchronize: true,
     logging: true,
     ssl: false,
-     extra: {
-        host:  process.env.DATABASE_URL 
-        ? { host: new URL(process.env.DATABASE_URL).hostname }
-        : {},
-    },
+     extra: "postgres.railway.internal",
     entities: [Locality, Province, Country, Adress, UserProfile],
     subscribers: [],
     migrations: []

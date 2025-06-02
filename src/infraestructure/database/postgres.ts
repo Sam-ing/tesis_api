@@ -7,10 +7,10 @@ dotenv.config();
 console.log(process.env.DATABASE_URL)
 export const AppDataSource = new DataSource({
     type: "postgres",
-    url: process.env.DATABASE_PUBLIC_URL,
+    url: process.env.DATABASE_URL,
     synchronize: true,
     logging: true,
-    ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+    ssl: false,
     entities: [Locality, Province, Country, Adress, UserProfile],
     subscribers: [],
     migrations: []

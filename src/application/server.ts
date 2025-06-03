@@ -1,7 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import dotenv from "dotenv";
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 import { AppDataSource } from "../infraestructure/database/postgres";
 import userProfileRouter from "../infraestructure/routes/userProfile.routes";
 import locationsRouter from "../infraestructure/routes/locations.routes";
@@ -23,7 +24,8 @@ export class Server{
     }
 
     async start(){
-        dotenv.config({ path: __dirname+'/.env' });
+        dotenv.config({ path:  path.join(__dirname, '.env') });
+        console.log("PORT: ", process.env.PORT)
         await AppDataSource.initialize()
         this.app.listen(process.env.PORT, () => {
             return console.log(`Express is listening at ${process.env.HOST}${process.env.PORT}`);

@@ -6,7 +6,6 @@ export class LoginUser {
   constructor(private userProfileRepository: userProfileRepository) {}
 
   async login(email: string, password: string): Promise<string | null> {
-    console.log(process.env.SECRET_KEY)
     const userProfile = await this.userProfileRepository.findByEmail(email);
     if (!userProfile) return null;
 

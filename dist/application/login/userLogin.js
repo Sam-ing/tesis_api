@@ -21,7 +21,6 @@ class LoginUser {
     }
     login(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(process.env.SECRET_KEY);
             const userProfile = yield this.userProfileRepository.findByEmail(email);
             if (!userProfile)
                 return null;

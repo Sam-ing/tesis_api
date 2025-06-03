@@ -9,7 +9,6 @@ if (process.env.PGPORT) {
     port = process.env.PGPORT;
 }
 ;
-console.log(process.env.PGHOST, process.env.PGPORT, process.env.PGUSER, process.env.PGPASSWORD, process.env.PGUSER);
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "postgres",
     host: process.env.PGHOST,

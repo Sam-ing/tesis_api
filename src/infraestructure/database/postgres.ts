@@ -4,20 +4,21 @@ import { Adress, Country, Locality, Province } from "../models/locations.models"
 import * as dotenv from "dotenv";
 
 dotenv.config();
+let port = "5432";
+if (process.env.PGPORT){
+    port = process.env.PGPORT;
+};
+
 export const AppDataSource = new DataSource({
     type: "postgres",
-    /*
-    host: "postgres.railway.internal",
-    port: 5432,
-    username: "postgres",
-    password: "RPSHsJhOkqsrSDtQgfYUlhdytMNsqHuj",
-    database: "railway",
-    */
-    url: process.env.DATABASE_URL,
+    host: process.env.PGHOST,
+    port: parseInt(port),
+    username: process.env.PGUSER,
+    password: process.env.PGHPASSWORD,
+    database: process.env.PGDATABASE,
     synchronize: true,
     logging: true,
     ssl: false,
-    extra: "postgres.railway.internal",
     entities: [Locality, Province, Country, Adress, UserProfile],
     subscribers: [],
     migrations: []

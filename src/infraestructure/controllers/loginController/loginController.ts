@@ -2,8 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { LoginUser } from "../../../application/login/userLogin";
 import { HttpResponse } from "../../../helpers/http.response";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-
+dotenv.config({ path: __dirname+'/.env' });
 export class MiddleWaresController {
 
     constructor(

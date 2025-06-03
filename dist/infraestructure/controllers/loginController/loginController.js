@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MiddleWaresController = void 0;
 const http_response_1 = require("../../../helpers/http.response");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config({ path: __dirname + '/.env' });
 class MiddleWaresController {
     constructor(useCase, httpResponse = new http_response_1.HttpResponse()) {
         this.useCase = useCase;

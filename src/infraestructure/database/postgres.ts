@@ -1,9 +1,10 @@
 import { DataSource } from "typeorm";
 import { UserProfile } from "../models/userProfile.model"
 import { Adress, Country, Locality, Province } from "../models/locations.models";
-import dotenv from "dotenv";
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-dotenv.config({ path: __dirname+'/.env' });
+dotenv.config({ path:  path.join(__dirname, '.env') });
 let port = "5432";
 if (process.env.PGPORT){
     port = process.env.PGPORT;

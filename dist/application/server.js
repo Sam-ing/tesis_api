@@ -59,7 +59,7 @@ class Server {
     start() {
         return __awaiter(this, void 0, void 0, function* () {
             dotenv.config({ path: path.join(__dirname, '.env') });
-            console.log("PORT: ", process.env);
+            console.log("ENV: ", process.env);
             yield postgres_1.AppDataSource.initialize();
             this.app.listen(process.env.PORT, () => {
                 return console.log(`Express is listening at ${process.env.HOST}${process.env.PORT}`);

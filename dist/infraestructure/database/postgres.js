@@ -29,19 +29,20 @@ const userProfile_model_1 = require("../models/userProfile.model");
 const locations_models_1 = require("../models/locations.models");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-console.log(process.env.DATABASE_URL);
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "postgres",
+    /*
     host: "postgres.railway.internal",
     port: 5432,
     username: "postgres",
     password: "RPSHsJhOkqsrSDtQgfYUlhdytMNsqHuj",
     database: "railway",
-    //url: "postgresql://postgres:RPSHsJhOkqsrSDtQgfYUlhdytMNsqHuj@postgres.railway.internal:5432/railway",
+    */
+    url: process.env.DATABASE_URL,
     synchronize: true,
     logging: true,
     ssl: false,
-    //extra: "postgres.railway.internal",
+    extra: "postgres.railway.internal",
     entities: [locations_models_1.Locality, locations_models_1.Province, locations_models_1.Country, locations_models_1.Adress, userProfile_model_1.UserProfile],
     subscribers: [],
     migrations: []

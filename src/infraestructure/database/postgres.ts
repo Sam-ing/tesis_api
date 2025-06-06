@@ -6,6 +6,7 @@ let port = "5432";
 if (process.env.PGPORT){
     port = process.env.PGPORT;
 };
+console.log(process.env.PGPASSWORD)
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: process.env.PGHOST,
